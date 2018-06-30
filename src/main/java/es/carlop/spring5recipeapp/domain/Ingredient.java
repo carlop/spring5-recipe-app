@@ -15,8 +15,8 @@ public class Ingredient {
     @ManyToOne
     private Recipe recipe;
 
-    @OneToOne
-    private UnitOfMeasure unitOfMeasure;
+    @OneToOne(fetch = FetchType.EAGER)
+    private UnitOfMeasure uom;
 
     public Long getId() {
         return id;
@@ -50,11 +50,12 @@ public class Ingredient {
         this.recipe = recipe;
     }
 
-    public UnitOfMeasure getUnitOfMeasure() {
-        return unitOfMeasure;
+    public UnitOfMeasure getUom() {
+        return uom;
     }
 
-    public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
-        this.unitOfMeasure = unitOfMeasure;
+    public void setUom(UnitOfMeasure uom) {
+        this.uom = uom;
     }
+
 }
