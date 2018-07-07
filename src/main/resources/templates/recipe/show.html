@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Recipe Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8 offset-md-2">
+            <div class="card" style="margin-top:2rem">
+                <h1 class="card-header" th:text="${recipe.description}">Recipe description</h1>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <h5>Categories:</h5>
+                        </div>
+                        <div class="col-9">
+                            <ul>
+                                <li>Cat one</li>
+                                <li>Cat two</li>
+                                <li>Cat three</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h5>Prep Time:</h5>
+                        </div>
+                        <div class="col-3">
+                            <p>30 min</p>
+                        </div>
+                        <div class="col-3">
+                            <h5>Difficulty</h5>
+                        </div>
+                        <div class="col-3">
+                            <p>Easy</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h5>Cook Time:</h5>
+                        </div>
+                        <div class="col-3">
+                            <p>30 min</p>
+                        </div>
+                        <div class="col-3">
+                            <h5>Servings:</h5>
+                        </div>
+                        <div class="col-3">
+                            <p>4</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h5>Source:</h5>
+                        </div>
+                        <div class="col-3">
+                            <p>30 min</p>
+                        </div>
+                        <div class="col-3">
+                            <h5>URL:</h5>
+                        </div>
+                        <div class="col-3">
+                            <p>https://www.carlop.es</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-top:2rem">
+                <h2 class="card-header">Ingredients</h2>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <ul>
+                                <li>Cat one</li>
+                                <li>Cat two</li>
+                                <li>Cat three</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-top:2rem">
+                <h2 class="card-header">Directions</h2>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu auctor diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec lacinia, dolor ac vehicula sagittis, mauris elit efficitur enim, sed ultrices felis velit sed lorem. Sed lorem ligula, cursus ut eleifend ut, malesuada sed quam. Mauris ut ligula sapien. Pellentesque nec urna at dolor congue iaculis a sed dolor. Suspendisse vitae tortor ut purus luctus tempor sit amet vel dui. Donec eu dapibus nunc. Duis semper rhoncus lectus, id semper ipsum egestas eget. Ut bibendum nunc nec dolor ornare, vel commodo ligula congue. In hac habitasse platea dictumst.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-top:2rem">
+                <h2 class="card-header">Notes</h2>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu auctor diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec lacinia, dolor ac vehicula sagittis, mauris elit efficitur enim, sed ultrices felis velit sed lorem. Sed lorem ligula, cursus ut eleifend ut, malesuada sed quam. Mauris ut ligula sapien. Pellentesque nec urna at dolor congue iaculis a sed dolor. Suspendisse vitae tortor ut purus luctus tempor sit amet vel dui. Donec eu dapibus nunc. Duis semper rhoncus lectus, id semper ipsum egestas eget. Ut bibendum nunc nec dolor ornare, vel commodo ligula congue. In hac habitasse platea dictumst.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous" th:src="@{/webjars/popper.js/1.14.1/popper.min.js}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
