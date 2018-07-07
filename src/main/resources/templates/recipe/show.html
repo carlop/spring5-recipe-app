@@ -10,6 +10,9 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-2 offset-md-10 fixed-top">
+            <a role="button" class="btn btn-outline-dark" href="/" style="margin-top: 2rem;">Back</a>
+        </div>
         <div class="col-8 offset-md-2">
             <div class="card" style="margin-top:2rem">
                 <h1 class="card-header" th:text="${recipe.description}">Recipe description</h1>
@@ -20,9 +23,9 @@
                         </div>
                         <div class="col-9">
                             <ul>
-                                <li>Cat one</li>
-                                <li>Cat two</li>
-                                <li>Cat three</li>
+                                <li th:remove="all">Cat one</li>
+                                <li th:remove="all">Cat two</li>
+                                <li th:each="category: ${recipe.categories}" th:text="${category.description}">Cat three</li>
                             </ul>
                         </div>
                     </div>
@@ -31,13 +34,13 @@
                             <h5>Prep Time:</h5>
                         </div>
                         <div class="col-3">
-                            <p>30 min</p>
+                            <p th:text="${recipe.prepTime} + ' min'">30 min</p>
                         </div>
                         <div class="col-3">
                             <h5>Difficulty</h5>
                         </div>
                         <div class="col-3">
-                            <p>Easy</p>
+                            <p th:text="${recipe.difficulty}">Easy</p>
                         </div>
                     </div>
                     <div class="row">
@@ -45,13 +48,13 @@
                             <h5>Cook Time:</h5>
                         </div>
                         <div class="col-3">
-                            <p>30 min</p>
+                            <p th:text="${recipe.cookTime} + ' min'">30 min</p>
                         </div>
                         <div class="col-3">
                             <h5>Servings:</h5>
                         </div>
                         <div class="col-3">
-                            <p>4</p>
+                            <p th:text="${recipe.servings}">4</p>
                         </div>
                     </div>
                     <div class="row">
@@ -59,13 +62,13 @@
                             <h5>Source:</h5>
                         </div>
                         <div class="col-3">
-                            <p>30 min</p>
+                            <p th:text="${recipe.source}">Source</p>
                         </div>
                         <div class="col-3">
                             <h5>URL:</h5>
                         </div>
                         <div class="col-3">
-                            <p>https://www.carlop.es</p>
+                            <p th:text="${recipe.url}">https://www.carlop.es</p>
                         </div>
                     </div>
                 </div>
@@ -76,9 +79,11 @@
                     <div class="row">
                         <div class="col-12">
                             <ul>
-                                <li>Cat one</li>
-                                <li>Cat two</li>
-                                <li>Cat three</li>
+                                <li th:remove="all">Ingredient one</li>
+                                <li th:remove="all">Ingredient two</li>
+                                <li th:each="ingredient: ${recipe.ingredients}" th:text="${ingredient.amount} + ' ' +
+                                 ${ingredient.uom.description} + ' - ' +
+                                 ${ingredient.description}">Ingredient three</li>
                             </ul>
                         </div>
                     </div>
@@ -89,7 +94,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu auctor diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec lacinia, dolor ac vehicula sagittis, mauris elit efficitur enim, sed ultrices felis velit sed lorem. Sed lorem ligula, cursus ut eleifend ut, malesuada sed quam. Mauris ut ligula sapien. Pellentesque nec urna at dolor congue iaculis a sed dolor. Suspendisse vitae tortor ut purus luctus tempor sit amet vel dui. Donec eu dapibus nunc. Duis semper rhoncus lectus, id semper ipsum egestas eget. Ut bibendum nunc nec dolor ornare, vel commodo ligula congue. In hac habitasse platea dictumst.</p>
+                            <p th:text="${recipe.directions}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu auctor diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec lacinia, dolor ac vehicula sagittis, mauris elit efficitur enim, sed ultrices felis velit sed lorem. Sed lorem ligula, cursus ut eleifend ut, malesuada sed quam. Mauris ut ligula sapien. Pellentesque nec urna at dolor congue iaculis a sed dolor. Suspendisse vitae tortor ut purus luctus tempor sit amet vel dui. Donec eu dapibus nunc. Duis semper rhoncus lectus, id semper ipsum egestas eget. Ut bibendum nunc nec dolor ornare, vel commodo ligula congue. In hac habitasse platea dictumst.</p>
                         </div>
                     </div>
                 </div>
@@ -99,7 +104,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu auctor diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec lacinia, dolor ac vehicula sagittis, mauris elit efficitur enim, sed ultrices felis velit sed lorem. Sed lorem ligula, cursus ut eleifend ut, malesuada sed quam. Mauris ut ligula sapien. Pellentesque nec urna at dolor congue iaculis a sed dolor. Suspendisse vitae tortor ut purus luctus tempor sit amet vel dui. Donec eu dapibus nunc. Duis semper rhoncus lectus, id semper ipsum egestas eget. Ut bibendum nunc nec dolor ornare, vel commodo ligula congue. In hac habitasse platea dictumst.</p>
+                            <p th:each="note: ${recipe.notes.recipeNotes}" th:text="${note}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu auctor diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec lacinia, dolor ac vehicula sagittis, mauris elit efficitur enim, sed ultrices felis velit sed lorem. Sed lorem ligula, cursus ut eleifend ut, malesuada sed quam. Mauris ut ligula sapien. Pellentesque nec urna at dolor congue iaculis a sed dolor. Suspendisse vitae tortor ut purus luctus tempor sit amet vel dui. Donec eu dapibus nunc. Duis semper rhoncus lectus, id semper ipsum egestas eget. Ut bibendum nunc nec dolor ornare, vel commodo ligula congue. In hac habitasse platea dictumst.</p>
                         </div>
                     </div>
                 </div>
