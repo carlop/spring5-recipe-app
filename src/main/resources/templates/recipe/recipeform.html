@@ -135,7 +135,10 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-outline-dark btn-lg">Submit</button>
+                <div class="btn-group" role="group" aria-label="Options" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-dark btn-lg">Submit</button>
+                    <a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/delte'}" role="button" class="btn btn-dark btn-lg">Delete</a>
+                </div>
             </form>
         </div>
     </div>
