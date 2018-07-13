@@ -91,7 +91,7 @@
                     <div class="card-header">
                         <h2>
                             Ingredients
-                            <button class="btn btn-dark btn-sm float-right">Edit</button>
+                            <a href="#" class="btn btn-dark btn-sm float-right" th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/update'}">Edit</a>
                         </h2>
                     </div>
                     <div class="card-body">
