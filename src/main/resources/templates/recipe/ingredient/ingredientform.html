@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Recipe Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8 offset-md-2">
+            <form th:object="${ingredient}" th:action="@{'/recipe/' + ${ingredient.recipeId} + '/ingredient'}" method="post">
+                <input type="hidden" th:field="*{id}">
+                <div class="card" style="margin-top:2rem">
+                    <h1 class="card-header">Edit ingredient</h1>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="description">Description:</label>
+                                            <input type="text" class="form-control" id="description" placeholder="Enter ingredient's description" th:field="*{description}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="amount">Amount:</label>
+                                            <input type="text" class="form-control" id="amount" placeholder="Enter ingredient's amount" th:field="*{amount}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="uom">UOM:</label>
+                                            <select class="form-control" name="uom.id" id="uom">
+                                                <option th:each="uomEach : ${uomList}"
+                                                        th:value="${uomEach.id}"
+                                                        th:selected="${uomEach.id.equals(ingredient.uom.id)}"
+                                                        th:text="${uomEach.description}">
+                                                Each
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-group" role="group" aria-label="Options" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-dark btn-lg">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous" th:src="@{/webjars/popper.js/1.14.1/popper.min.js}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

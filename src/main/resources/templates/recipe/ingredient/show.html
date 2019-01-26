@@ -10,6 +10,11 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-2 offset-md-10 fixed-top">
+            <div class="btn-group-vertical" style="margin-top: 2rem;">
+                <a role="button" class="btn btn-dark" href="#" th:href="@{'/recipe/' + ${ingredient.recipeId} + '/show'}">Back to recipe</a>
+            </div>
+        </div>
         <div class="col-8 offset-md-2">
             <div class="card" style="margin-top:2rem">
                 <h1 class="card-header">Ingredient!</h1>
@@ -35,7 +40,7 @@
                         </tr>
                         <tr>
                             <td th:text="${ingredient.id}">3</td>
-                            <td th:text="${ingredient.amount} + ' ' + ${ingredient.unitOfMeasureCommand.description} + ' ' + ${ingredient.description}">Ingredient three</td>
+                            <td th:text="${ingredient.amount} + ' ' + ${ingredient.uom.description} + ' ' + ${ingredient.description}">Ingredient three</td>
                             <td></td>
                         </tr>
                         </tbody>
