@@ -11,7 +11,7 @@
 <div class="container">
     <div class="row">
         <div class="col-8 offset-md-2">
-            <form action="" th:object="${recipe}" th:action="@{/recipe/}">
+            <form action="" th:object="${recipe}" th:action="@{/recipe/}" method="post">
                 <div class="card" style="margin-top:2rem">
                     <h1 class="card-header">Edit recipe information</h1>
                     <div class="card-body">
@@ -54,10 +54,15 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="difficultySelect">Difficulty</label>
-                                                <select class="form-control" id="difficultySelect">
-                                                    <option>Easy</option>
-                                                    <option>Medium</option>
-                                                    <option>Hard</option>
+                                                <select class="form-control" id="difficultySelect" th:field="*{difficulty}">
+                                                    <option th:each="difficultyValue : ${T(es.carlop.spring5recipeapp.domain.Difficulty).values()}"
+                                                            th:value="${difficultyValue.name()}"
+                                                            th:text="${difficultyValue.name()}">val</option>
+                                                </select>
+                                                <select class="form-control" id="difficultySelect" th:remove="all">
+                                                    <option>easy</option>
+                                                    <option>medium</option>
+                                                    <option>hard</option>
                                                 </select>
                                             </div>
                                         </div>
