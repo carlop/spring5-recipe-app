@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-5">
                             <img src="../../static/images/guacamole400x400WithX.jpg"
-                                 th:src="@{/images/guacamole400x400WithX.jpg}"
+                                 th:src="@{'/recipe/' + ${recipe.id} + '/recipeimage'}"
                                  width="200" height="200" th:alt="${recipe.description} + ' image'" th:title="${recipe.description} + ' image'">
                             <a href="#" class="btn btn-dark btn-sm float-right" th:href="@{'/recipe/' + ${recipe.id} + '/image'}">Change image</a>
                         </div>
