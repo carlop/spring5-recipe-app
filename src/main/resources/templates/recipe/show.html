@@ -25,12 +25,18 @@
                         <div class="col-3">
                             <h5>Categories:</h5>
                         </div>
-                        <div class="col-9">
+                        <div class="col-4">
                             <ul>
                                 <li th:remove="all">Cat one</li>
                                 <li th:remove="all">Cat two</li>
                                 <li th:each="category: ${recipe.categories}" th:text="${category.description}">Cat three</li>
                             </ul>
+                        </div>
+                        <div class="col-5">
+                            <img src="../../static/images/guacamole400x400WithX.jpg"
+                                 th:src="@{/images/guacamole400x400WithX.jpg}"
+                                 width="200" height="200" th:alt="${recipe.description} + ' image'" th:title="${recipe.description} + ' image'">
+                            <a href="#" class="btn btn-dark btn-sm float-right" th:href="@{'/recipe/' + ${recipe.id} + '/image'}">Change image</a>
                         </div>
                     </div>
                     <div class="row">
