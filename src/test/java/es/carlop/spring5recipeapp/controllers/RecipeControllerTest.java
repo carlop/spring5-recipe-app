@@ -2,6 +2,7 @@ package es.carlop.spring5recipeapp.controllers;
 
 import es.carlop.spring5recipeapp.commands.RecipeCommand;
 import es.carlop.spring5recipeapp.domain.Recipe;
+import es.carlop.spring5recipeapp.exceptions.NotFoundException;
 import es.carlop.spring5recipeapp.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +43,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void textGetRecipe() throws Exception {
+    public void testGetRecipe() throws Exception {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
 
@@ -52,6 +53,17 @@ public class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
     }
 
     @Test

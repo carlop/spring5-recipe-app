@@ -1,8 +1,10 @@
 package es.carlop.spring5recipeapp.services;
 
+import es.carlop.spring5recipeapp.commands.RecipeCommand;
 import es.carlop.spring5recipeapp.converters.RecipeCommandToRecipe;
 import es.carlop.spring5recipeapp.converters.RecipeToRecipeCommand;
 import es.carlop.spring5recipeapp.domain.Recipe;
+import es.carlop.spring5recipeapp.exceptions.NotFoundException;
 import es.carlop.spring5recipeapp.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +37,37 @@ public class RecipeServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+
+        // Should go boom
+    }
+
+    @Test
+    public void getRecipeCommandByIdTest() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+        RecipeCommand commandById = recipeService.findCommandById(1L);
+
+        assertNotNull("Null recipe returned", commandById);
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
     }
 
     @Test
