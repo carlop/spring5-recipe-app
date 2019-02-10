@@ -12,82 +12,110 @@
     <div class="row">
         <div class="col-8 offset-md-2">
             <form action="" th:object="${recipe}" th:action="@{/recipe/}" method="post">
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                    Please, correct errors below.
+                </div>
                 <div class="card" style="margin-top:2rem">
                     <h1 class="card-header">Edit recipe information</h1>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                    <input type="hidden" th:field="*{id}">
-                                    <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <input type="text" class="form-control" id="description" aria-describedby="descriptionHelp" placeholder="Enter recipe's description" th:field="*{description}">
-                                        <small id="descriptionHelp" class="form-text text-muted">Enter a short description of the recipe.</small>
+                                <input type="hidden" th:field="*{id}">
+                                <div class="form-group" th:class="${#fields.hasErrors('description')} ? 'form-group is-invalid' : 'form-group'">
+                                    <label for="description">Description</label>
+                                    <input type="text" class="form-control" id="description" aria-describedby="descriptionHelp" placeholder="Enter recipe's description" th:field="*{description}" th:errorclass="is-invalid">
+                                    <span class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
+                                        <ul>
+                                            <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+                                        </ul>
+                                    </span>
+                                    <small id="descriptionHelp" class="form-text text-muted">Enter a short description of the recipe.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Categories</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="categoryCheck1">
+                                        <label class="form-check-label" for="categoryCheck1">
+                                            Category one
+                                        </label>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="description">Categories</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="categoryCheck1">
-                                            <label class="form-check-label" for="categoryCheck1">
-                                                Category one
-                                            </label>
-                                        </div>
-                                        <div class="form-check" th:remove="all">
-                                            <input class="form-check-input" type="checkbox" value="" id="categoryCheck2">
-                                            <label class="form-check-label" for="categoryCheck2">
-                                                Category two
-                                            </label>
-                                        </div>
+                                    <div class="form-check" th:remove="all">
+                                        <input class="form-check-input" type="checkbox" value="" id="categoryCheck2">
+                                        <label class="form-check-label" for="categoryCheck2">
+                                            Category two
+                                        </label>
                                     </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="prepTime">Prep time</label>
-                                                <input type="text" class="form-control" id="prepTime" th:field="*{prepTime}">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="cookTime">Cook time</label>
-                                                <input type="text" class="form-control" id="cookTime" th:field="*{cookTime}">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="difficultySelect">Difficulty</label>
-                                                <select class="form-control" id="difficultySelect" th:field="*{difficulty}">
-                                                    <option th:each="difficultyValue : ${T(es.carlop.spring5recipeapp.domain.Difficulty).values()}"
-                                                            th:value="${difficultyValue.name()}"
-                                                            th:text="${difficultyValue.name()}">val</option>
-                                                </select>
-                                                <select class="form-control" id="difficultySelect" th:remove="all">
-                                                    <option>easy</option>
-                                                    <option>medium</option>
-                                                    <option>hard</option>
-                                                </select>
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group" th:class="${#fields.hasErrors('prepTime')} ? 'form-group is-invalid' : 'form-group'">
+                                            <label for="prepTime">Prep time</label>
+                                            <input type="text" class="form-control" id="prepTime" th:field="*{prepTime}" th:errorclass="is-invalid">
+                                            <span class="invalid-feedback" th:if="${#fields.hasErrors('prepTime')}">
+                                                <ul>
+                                                    <li th:each="err : ${#fields.errors('prepTime')}" th:text="${err}"></li>
+                                                </ul>
+                                            </span>
                                         </div>
                                     </div>
+                                    <div class="col">
+                                        <div class="form-group" th:class="${#fields.hasErrors('cookTime')} ? 'form-group is-invalid' : 'form-group'">
+                                            <label for="cookTime">Cook time</label>
+                                            <input type="text" class="form-control" id="cookTime" th:field="*{cookTime}" th:errorclass="is-invalid">
+                                            <span class="invalid-feedback" th:if="${#fields.hasErrors('cookTime')}">
+                                                <ul>
+                                                    <li th:each="err : ${#fields.errors('cookTime')}" th:text="${err}"></li>
+                                                </ul>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="difficultySelect">Difficulty</label>
+                                            <select class="form-control" id="difficultySelect" th:field="*{difficulty}">
+                                                <option th:each="difficultyValue : ${T(es.carlop.spring5recipeapp.domain.Difficulty).values()}"
+                                                        th:value="${difficultyValue.name()}"
+                                                        th:text="${difficultyValue.name()}">val</option>
+                                            </select>
+                                            <select class="form-control" id="difficultySelect" th:remove="all">
+                                                <option>easy</option>
+                                                <option>medium</option>
+                                                <option>hard</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="servings">Servings</label>
-                                                <input type="text" class="form-control" id="servings" th:field="*{servings}">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="source">Source</label>
-                                                <input type="text" class="form-control" id="source" th:field="*{source}">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="url">URL</label>
-                                                <input type="text" class="form-control" id="url" th:field="*{url}">
-                                            </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group" th:class="${#fields.hasErrors('servings')} ? 'form-group is-invalid' : 'form-group'">
+                                            <label for="servings">Servings</label>
+                                            <input type="text" class="form-control" id="servings" th:field="*{servings}" th:errorclass="is-invalid">
+                                            <span class="invalid-feedback" th:if="${#fields.hasErrors('servings')}">
+                                                <ul>
+                                                    <li th:each="err : ${#fields.errors('servings')}" th:text="${err}"></li>
+                                                </ul>
+                                            </span>
                                         </div>
                                     </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="source">Source</label>
+                                            <input type="text" class="form-control" id="source" th:field="*{source}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group" th:class="${#fields.hasErrors('url')} ? 'form-group is-invalid' : 'form-group'">
+                                            <label for="url">URL</label>
+                                            <input type="text" class="form-control" id="url" th:field="*{url}" th:errorclass="is-invalid">
+                                            <span class="invalid-feedback" th:if="${#fields.hasErrors('url')}">
+                                                <ul>
+                                                    <li th:each="err : ${#fields.errors('url')}" th:text="${err}"></li>
+                                                </ul>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -118,9 +146,14 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <div class="form-group">
+                                <div class="form-group" th:class="${#fields.hasErrors('directions')} ? 'form-group is-invalid' : 'form-group'">
                                     <label for="directions">Directions</label>
-                                    <textarea type="text" class="form-control" id="directions" aria-describedby="directionsHelp" placeholder="Enter recipe's directions" th:field="*{directions}"></textarea>
+                                    <textarea type="text" class="form-control" id="directions" aria-describedby="directionsHelp" placeholder="Enter recipe's directions" th:field="*{directions}" th:errorclass="is-invalid"></textarea>
+                                    <span class="invalid-feedback" th:if="${#fields.hasErrors('directions')}">
+                                        <ul>
+                                            <li th:each="err : ${#fields.errors('directions')}" th:text="${err}"></li>
+                                        </ul>
+                                    </span>
                                     <small id="directionsHelp" class="form-text text-muted">Enter the directions for this recipe.</small>
                                 </div>
                             </div>
