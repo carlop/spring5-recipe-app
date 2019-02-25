@@ -8,7 +8,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
@@ -16,7 +15,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -57,9 +55,9 @@ public class IndexControllerTest {
         // Given
         Set<Recipe> recipes = new HashSet<>();
         Recipe recipe1 = new Recipe();
-        recipe1.setId(1L);
+        recipe1.setId("1");
         Recipe recipe2 = new Recipe();
-        recipe2.setId(2L);
+        recipe2.setId("2");
         recipes.add(recipe1);
         recipes.add(recipe2);
 

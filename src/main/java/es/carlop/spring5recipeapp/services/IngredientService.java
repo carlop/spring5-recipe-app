@@ -3,7 +3,7 @@ package es.carlop.spring5recipeapp.services;
 import es.carlop.spring5recipeapp.commands.IngredientCommand;
 
 public interface IngredientService {
-    IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId);
+    IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
     IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
-    void deleteById(Long recipeId, Long ingredientId);
+    void deleteById(String recipeId, String ingredientId);
 }
