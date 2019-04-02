@@ -3,13 +3,15 @@ package es.carlop.spring5recipeapp.services;
 import es.carlop.spring5recipeapp.commands.UnitOfMeasureCommand;
 import es.carlop.spring5recipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import es.carlop.spring5recipeapp.domain.UnitOfMeasure;
-import es.carlop.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import es.carlop.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Flux;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +23,7 @@ public class UnitOfMeasureServiceImplTest {
     UnitOfMeasureService unitOfMeasureService;
 
     @Mock
-    UnitOfMeasureRepository unitOfMeasureRepository;
+    UnitOfMeasureReactiveRepository unitOfMeasureRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -42,10 +44,10 @@ public class UnitOfMeasureServiceImplTest {
         uom2.setId("2");
         unitOfMeasures.add(uom2);
 
-        when(unitOfMeasureRepository.findAll()).thenReturn(unitOfMeasures);
+        when(unitOfMeasureRepository.findAll()).thenReturn(Flux.just(uom1, uom2));
 
         // When
-        Set<UnitOfMeasureCommand> commands = unitOfMeasureService.listAllUoms();
+        List<UnitOfMeasureCommand> commands = unitOfMeasureService.listAllUoms().collectList().block();
 
         // Then
         assertEquals(2, commands.size());
