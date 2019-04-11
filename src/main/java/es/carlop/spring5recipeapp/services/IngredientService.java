@@ -1,9 +1,10 @@
 package es.carlop.spring5recipeapp.services;
 
 import es.carlop.spring5recipeapp.commands.IngredientCommand;
+import reactor.core.publisher.Mono;
 
 public interface IngredientService {
-    IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
-    IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
-    void deleteById(String recipeId, String ingredientId);
+    Mono<IngredientCommand> findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
+    Mono<IngredientCommand> saveIngredientCommand(IngredientCommand ingredientCommand);
+    Mono<Void> deleteById(String recipeId, String ingredientIdToDelete);
 }

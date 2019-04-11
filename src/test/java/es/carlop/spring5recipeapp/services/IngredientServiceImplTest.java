@@ -1,6 +1,7 @@
 package es.carlop.spring5recipeapp.services;
 
 import es.carlop.spring5recipeapp.commands.IngredientCommand;
+import es.carlop.spring5recipeapp.commands.UnitOfMeasureCommand;
 import es.carlop.spring5recipeapp.converters.IngredientCommandToIngredient;
 import es.carlop.spring5recipeapp.converters.IngredientToIngredientCommand;
 import es.carlop.spring5recipeapp.converters.UnitOfMeasureCommandToUnitOfMeasure;
@@ -9,10 +10,13 @@ import es.carlop.spring5recipeapp.domain.Ingredient;
 import es.carlop.spring5recipeapp.domain.Recipe;
 import es.carlop.spring5recipeapp.repositories.RecipeRepository;
 import es.carlop.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import es.carlop.spring5recipeapp.repositories.reactive.RecipeReactiveRepository;
+import es.carlop.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
@@ -25,12 +29,15 @@ public class IngredientServiceImplTest {
     private final IngredientCommandToIngredient ingredientCommandToIngredient;
 
     @Mock
+    RecipeReactiveRepository recipeReactiveRepository;
+
+    @Mock
     RecipeRepository recipeRepository;
 
     @Mock
-    UnitOfMeasureRepository unitOfMeasureRepository;
+    UnitOfMeasureReactiveRepository unitOfMeasureRepository;
 
-    IngredientService ingredientService;
+    private IngredientService ingredientService;
 
     // Init converters
     public IngredientServiceImplTest() {
@@ -43,7 +50,7 @@ public class IngredientServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand,
-                ingredientCommandToIngredient, recipeRepository, unitOfMeasureRepository);
+                ingredientCommandToIngredient, recipeReactiveRepository, recipeRepository, unitOfMeasureRepository);
     }
 
     @Test
@@ -71,15 +78,15 @@ public class IngredientServiceImplTest {
         recipe.addIngredient(ingredient3);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
+        when(recipeReactiveRepository.findById(anyString())).thenReturn(Mono.just(recipe));
 
         // Then
-        IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId("1", "3");
+        IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId("1", "3").block();
 
         // When
         assertEquals("3", ingredientCommand.getId());
 //        assertEquals("1", ingredientCommand.getRecipeId());
-        verify(recipeRepository, times(1)).findById(anyString());
+        verify(recipeReactiveRepository, times(1)).findById(anyString());
     }
 
     @Test
@@ -88,6 +95,8 @@ public class IngredientServiceImplTest {
         IngredientCommand command = new IngredientCommand();
         command.setId("3");
         command.setRecipeId("2");
+        command.setUom(new UnitOfMeasureCommand());
+        command.getUom().setId("1234");
 
         Optional<Recipe> recipeOptional = Optional.of(new Recipe());
 
@@ -96,15 +105,15 @@ public class IngredientServiceImplTest {
         savedRecipe.getIngredients().iterator().next().setId("3");
 
         when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
-        when(recipeRepository.save(any())).thenReturn(savedRecipe);
+        when(recipeReactiveRepository.save(any())).thenReturn(Mono.just(savedRecipe));
 
         // When
-        IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
+        IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command).block();
 
         // Then
         assertEquals("3", savedCommand.getId());
         verify(recipeRepository, times(1)).findById(anyString());
-        verify(recipeRepository, times(1)).save(any(Recipe.class));
+        verify(recipeReactiveRepository, times(1)).save(any(Recipe.class));
     }
 
     @Test
@@ -114,7 +123,6 @@ public class IngredientServiceImplTest {
         Ingredient ingredient = new Ingredient();
         ingredient.setId("3");
         recipe.addIngredient(ingredient);
-//        ingredient.setRecipe(recipe);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
         when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
