@@ -5,6 +5,7 @@ import es.carlop.spring5recipeapp.converters.IngredientCommandToIngredient;
 import es.carlop.spring5recipeapp.converters.IngredientToIngredientCommand;
 import es.carlop.spring5recipeapp.domain.Ingredient;
 import es.carlop.spring5recipeapp.domain.Recipe;
+import es.carlop.spring5recipeapp.domain.UnitOfMeasure;
 import es.carlop.spring5recipeapp.repositories.RecipeRepository;
 import es.carlop.spring5recipeapp.repositories.reactive.RecipeReactiveRepository;
 import es.carlop.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -83,6 +85,13 @@ public class IngredientServiceImpl implements IngredientService {
             } else {
                 // add new Ingredient
                 Ingredient ingredient = ingredientCommandToIngredient.convert(ingredientCommand);
+                if (ingredient.getId().isEmpty()) {
+                    ingredient.setId(UUID.randomUUID().toString());
+                }
+                if (ingredient.getUom().getDescription() == null) {
+                    ingredient.getUom().setDescription(unitOfMeasureReactiveRepository.
+                            findById(ingredient.getUom().getId()).block().getDescription());
+                }
                 recipe.addIngredient(ingredient);
             }
 
