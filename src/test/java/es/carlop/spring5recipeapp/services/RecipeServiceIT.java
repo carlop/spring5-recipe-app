@@ -40,7 +40,7 @@ public class RecipeServiceIT {
 
         // When
         testRecipeCommand.setDescription(NEW_DESCRIPTION);
-        RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(testRecipeCommand);
+        RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(testRecipeCommand).block();
 
         // Then
         assertEquals(NEW_DESCRIPTION, savedRecipeCommand.getDescription());

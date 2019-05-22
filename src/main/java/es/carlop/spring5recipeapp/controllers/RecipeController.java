@@ -28,7 +28,7 @@ public class RecipeController {
     public String showById(@PathVariable String id, Model model) {
         log.debug("Getting recipe page!");
 
-        model.addAttribute("recipe", recipeService.findById(id));
+        model.addAttribute("recipe", recipeService.findById(id).block());
 
         return  "recipe/show";
     }
@@ -46,7 +46,7 @@ public class RecipeController {
     public String updateRecipe(@PathVariable String id, Model model) {
         log.debug("Updating a recipe!");
 
-        model.addAttribute("recipe", recipeService.findCommandById(id));
+        model.addAttribute("recipe", recipeService.findCommandById(id).block());
 
         return RECIPE_RECIPEFORM_URL;
     }
@@ -61,7 +61,7 @@ public class RecipeController {
             return RECIPE_RECIPEFORM_URL;
         }
 
-        RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
+        RecipeCommand savedCommand = recipeService.saveRecipeCommand(command).block();
 
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
 

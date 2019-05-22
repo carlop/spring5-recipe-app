@@ -2,17 +2,17 @@ package es.carlop.spring5recipeapp.services;
 
 import es.carlop.spring5recipeapp.commands.RecipeCommand;
 import es.carlop.spring5recipeapp.domain.Recipe;
-
-import java.util.Set;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface RecipeService {
-    Set<Recipe> getRecipes();
+    Flux<Recipe> getRecipes();
 
-    Recipe findById(String id);
+    Mono<Recipe> findById(String id);
 
-    RecipeCommand saveRecipeCommand(RecipeCommand command);
+    Mono<RecipeCommand> saveRecipeCommand(RecipeCommand command);
 
-    RecipeCommand findCommandById(String l);
+    Mono<RecipeCommand> findCommandById(String id);
 
     void deleteById(String id);
 }
