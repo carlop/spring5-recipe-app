@@ -36,8 +36,8 @@ public class ImageController {
     }
 
     @PostMapping("recipe/{id}/image")
-    public String handleImagePost(@PathVariable String id, @RequestParam("imagefile")MultipartFile file) {
-        imageService.saveImageFile(id, file);
+    public String handleImagePost(@PathVariable String id, @RequestParam("imagefile") MultipartFile file) {
+        imageService.saveImageFile(id, file).block();
 
         return "redirect:/recipe/" + id + "/show";
     }
@@ -46,16 +46,18 @@ public class ImageController {
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
         RecipeCommand recipeCommand = recipeService.findCommandById(id).block();
 
-        byte[] byteArray = new byte[recipeCommand.getImage().length];
+        if (recipeCommand.getImage() != null) {
+            byte[] byteArray = new byte[recipeCommand.getImage().length];
 
-        int i = 0;
+            int i = 0;
 
-        for (Byte wrappedByte : recipeCommand.getImage()) {
-            byteArray[i++] = wrappedByte;
+            for (Byte wrappedByte : recipeCommand.getImage()) {
+                byteArray[i++] = wrappedByte;
+            }
+
+            response.setContentType("image/jpeg");
+            InputStream inputStream = new ByteArrayInputStream(byteArray);
+            IOUtils.copy(inputStream, response.getOutputStream());
         }
-
-        response.setContentType("image/jpeg");
-        InputStream inputStream = new ByteArrayInputStream(byteArray);
-        IOUtils.copy(inputStream, response.getOutputStream());
     }
 }
