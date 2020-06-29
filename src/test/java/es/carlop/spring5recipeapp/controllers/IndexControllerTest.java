@@ -3,6 +3,7 @@ package es.carlop.spring5recipeapp.controllers;
 import es.carlop.spring5recipeapp.domain.Recipe;
 import es.carlop.spring5recipeapp.services.RecipeService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -25,6 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+@Ignore
 public class IndexControllerTest {
 
     @Mock
