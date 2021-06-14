@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 public class IngredientController {
@@ -67,7 +69,6 @@ public class IngredientController {
         model.addAttribute("ingredient", ingredientCommand);
         // Init UOM
         ingredientCommand.setUom(new UnitOfMeasureCommand());
-        model.addAttribute("uomList", unitOfMeasureService.listAllUoms().collectList().block());
 
         return "recipe/ingredient/ingredientform";
     }
@@ -76,8 +77,6 @@ public class IngredientController {
     public String updateRecipeIngredient(@PathVariable String recipeId,
                                          @PathVariable String id, Model model) {
         model.addAttribute("ingredient",ingredientService.findByRecipeIdAndIngredientId(recipeId, id).block());
-
-        model.addAttribute("uomList", unitOfMeasureService.listAllUoms().collectList().block());
 
         return "recipe/ingredient/ingredientform";
     }
@@ -95,7 +94,6 @@ public class IngredientController {
                 log.debug(objectError.toString());
             });
 
-            model.addAttribute("uomList", unitOfMeasureService.listAllUoms().collectList().block());
             return "recipe/ingredient/ingredientform";
         }
 
@@ -115,5 +113,10 @@ public class IngredientController {
         ingredientService.deleteById(recipeId, id).block();
 
         return "redirect:/recipe/" + recipeId + "/ingredients";
+    }
+
+    @ModelAttribute("uomList")
+    public List<UnitOfMeasureCommand> populateUomList() {
+        return unitOfMeasureService.listAllUoms().collectList().block();
     }
 }

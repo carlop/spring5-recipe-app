@@ -11,6 +11,7 @@
 <div class="container">
     <div class="row">
         <div class="col-8 offset-md-2">
+            <!--/*@thymesVar id="ingredient" type="es.carlop.spring5recipeapp.commands.IngredientCommand"*/-->
             <form th:object="${ingredient}" th:action="@{'/recipe/' + ${ingredient.recipeId} + '/ingredient'}" method="post">
 
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
