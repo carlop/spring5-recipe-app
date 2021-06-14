@@ -54,16 +54,13 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
 //    @Transactional
     public Mono<IngredientCommand> saveIngredientCommand(IngredientCommand ingredientCommand) {
+        Recipe recipe = recipeReactiveRepository.findById(ingredientCommand.getRecipeId()).block();
 
-        Optional<Recipe> recipeOptional = recipeRepository.findById(ingredientCommand.getRecipeId());
-
-        if (!recipeOptional.isPresent()) {
+        if (recipe == null) {
             // Todo toss error if not found!
             log.error("Recipe not found for id: " + ingredientCommand.getRecipeId());
             return Mono.just(new IngredientCommand());
         } else {
-            Recipe recipe = recipeOptional.get();
-
             Optional<Ingredient> ingredientOptional = recipe
                     .getIngredients()
                     .stream()
