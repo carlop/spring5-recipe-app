@@ -57,9 +57,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void deleteById(String id) {
+    public Mono<Void> deleteById(String id) {
         log.debug("Trying to delete a recipe based on its ID!");
 
         recipeReactiveRepository.deleteById(id).block();
+
+        return Mono.empty();
     }
 }

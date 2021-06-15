@@ -12,8 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 @Slf4j
 @Controller
@@ -41,7 +40,7 @@ public class IngredientController {
         log.debug("Getting ingredient list for recipe id: " + recipeId);
 
         // Use command object to avoid lazy load errors in Thymeleaf.
-        model.addAttribute("recipe", recipeService.findCommandById(recipeId).block());
+        model.addAttribute("recipe", recipeService.findCommandById(recipeId));
 
         return "recipe/ingredient/list";
     }
@@ -51,7 +50,7 @@ public class IngredientController {
                                        @PathVariable String id, Model model) {
         log.debug("Showing ingredient id " + id + " for recipe id: " + recipeId);
 
-        model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeId, id).block());
+        model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeId, id));
 
         return "recipe/ingredient/show";
     }
@@ -99,7 +98,9 @@ public class IngredientController {
 
         IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command).block();
 
+/*
         log.debug("saved recipe id: " + savedCommand.getRecipeId());
+*/
         log.debug("saved ingredient id: " + savedCommand.getId());
 
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
@@ -116,7 +117,7 @@ public class IngredientController {
     }
 
     @ModelAttribute("uomList")
-    public List<UnitOfMeasureCommand> populateUomList() {
-        return unitOfMeasureService.listAllUoms().collectList().block();
+    public Flux<UnitOfMeasureCommand> populateUomList() {
+        return unitOfMeasureService.listAllUoms();
     }
 }
