@@ -72,6 +72,7 @@ public class ImageControllerTest {
         verify(imageService, times(1)).saveImageFile(anyString(), any());
     }
 
+/*
     @Test
     public void renderImageFromDB() throws Exception {
         // Given
@@ -100,5 +101,6 @@ public class ImageControllerTest {
         
         assertEquals(s.getBytes().length, responseBytes.length);
     }
+*/
 
 }
